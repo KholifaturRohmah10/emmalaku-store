@@ -1,21 +1,33 @@
 <?php
 
+use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
+use Illuminate\View\ViewServiceProvider;
+
 if (isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) {
     $runtimePath = '/tmp/emmalaku';
+    $storagePath = $runtimePath.'/storage';
     $setRuntimeEnv = static function (string $key, string $value): void {
         $_ENV[$key] = $value;
         $_SERVER[$key] = $value;
         putenv("{$key}={$value}");
     };
 
-    foreach (['views', 'cache', 'sessions', 'logs'] as $directory) {
-        $path = "{$runtimePath}/{$directory}";
+    foreach ([
+        $runtimePath.'/views',
+        $storagePath.'/framework/cache',
+        $storagePath.'/framework/cache/data',
+        $storagePath.'/framework/sessions',
+        $storagePath.'/framework/views',
+        $storagePath.'/logs',
+    ] as $path) {
 
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
         }
     }
 
+    $setRuntimeEnv('LARAVEL_STORAGE_PATH', $storagePath);
     $setRuntimeEnv('VIEW_COMPILED_PATH', $runtimePath.'/views');
     $setRuntimeEnv('SESSION_DRIVER', $_ENV['SESSION_DRIVER'] ?? $_SERVER['SESSION_DRIVER'] ?? 'cookie');
     $setRuntimeEnv('CACHE_STORE', $_ENV['CACHE_STORE'] ?? $_SERVER['CACHE_STORE'] ?? 'array');
@@ -23,4 +35,34 @@ if (isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) {
     $setRuntimeEnv('LOG_CHANNEL', $_ENV['LOG_CHANNEL'] ?? $_SERVER['LOG_CHANNEL'] ?? 'stderr');
 }
 
-require __DIR__ . '/../public/index.php';
+try {
+    define('LARAVEL_START', microtime(true));
+
+    if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
+        require $maintenance;
+    }
+
+    require __DIR__.'/../vendor/autoload.php';
+
+    /** @var Application $app */
+    $app = require_once __DIR__.'/../bootstrap/app.php';
+
+    if ((isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) && ! $app->bound('view')) {
+        $app->register(ViewServiceProvider::class);
+    }
+
+    $app->handleRequest(Request::capture());
+} catch (Throwable $exception) {
+    error_log((string) $exception);
+
+    if ($previous = $exception->getPrevious()) {
+        error_log('Previous exception: '.(string) $previous);
+    }
+
+    if (! headers_sent()) {
+        http_response_code(500);
+        header('Content-Type: text/plain; charset=UTF-8');
+    }
+
+    echo 'EMMALAKU server error. Cek Vercel Function Logs untuk detail terbaru.';
+}
