@@ -5357,7 +5357,19 @@ body[data-page="landing"].is-landing-exit .home-opening__progress {
     }
 
     .app-topbar {
-        padding: 16px 16px 10px;
+        margin: 10px 12px 12px;
+        padding: 12px;
+        border: 1px solid rgba(255, 255, 255, 0.68);
+        border-radius: 24px;
+        background: rgba(255, 250, 253, 0.68);
+        box-shadow: 0 16px 34px rgba(42, 36, 51, 0.1);
+        backdrop-filter: blur(16px);
+    }
+
+    :root[data-theme="night"] .app-topbar {
+        border-color: rgba(255, 255, 255, 0.12);
+        background: rgba(58, 43, 68, 0.7);
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.22);
     }
 
     .app-screen {
