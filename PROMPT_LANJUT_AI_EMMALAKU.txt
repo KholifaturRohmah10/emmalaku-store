@@ -1,0 +1,265 @@
+PROMPT LANJUT AI UNTUK PROYEK EMMALAKU
+Update terakhir: 28 Mei 2026
+
+Gunakan catatan ini setiap kali melanjutkan proyek EMMALAKU di chat/AI baru.
+AI yang membaca file ini harus memahami konteks sebelum mengubah apa pun.
+
+1. Identitas proyek
+
+Nama proyek: EMMALAKU
+Lokasi lokal: C:\xampp\htdocs\emmalaku
+Jenis proyek: Web app Laravel + Blade + Vite + JavaScript.
+Konsep tampilan: aplikasi food order mobile-first dengan versi desktop/PC responsive.
+
+Ini bukan aplikasi Android/iOS native.
+Ini web app yang desainnya dibuat terasa seperti aplikasi mobile dan sudah ditambah mode PC.
+
+2. Teknologi utama
+
+Backend lokal:
+- Laravel 12
+- PHP 8.2+
+- Blade
+
+Frontend:
+- Vite
+- Tailwind CSS 4
+- JavaScript module
+- CSS custom besar di resources/css/app.css
+
+Data aplikasi:
+- Produk/menu dari resources/js/store/products.js
+- Keranjang, invoice, riwayat, notifikasi, profil checkout, dan tema disimpan di localStorage browser
+- Tidak ada database bisnis untuk order/menu
+
+3. File penting
+
+Route:
+- routes/web.php
+
+Controller:
+- app/Http/Controllers/StorefrontController.php
+
+Layout:
+- resources/views/layouts/app.blade.php
+- resources/views/layouts/entry.blade.php
+- resources/views/layouts/scan.blade.php
+
+Halaman:
+- resources/views/landing.blade.php
+- resources/views/home.blade.php
+- resources/views/products/index.blade.php
+- resources/views/products/show.blade.php
+- resources/views/cart.blade.php
+- resources/views/checkout.blade.php
+- resources/views/notifications.blade.php
+- resources/views/history.blade.php
+- resources/views/about.blade.php
+- resources/views/receipt-scan.blade.php
+
+Frontend logic:
+- resources/js/app.js
+- resources/js/store/products.js
+
+Styling utama:
+- resources/css/app.css
+
+Static export untuk Vercel:
+- scripts/export-static.php
+- public/index.html
+- public/beranda/index.html
+- public/produk/index.html
+- public/produk/detail/index.html
+- public/keranjang/index.html
+- public/checkout/index.html
+- public/notifikasi/index.html
+- public/riwayat/index.html
+- public/tentang/index.html
+- public/s/index.html
+- public/build/manifest.json
+- public/build/assets/*
+
+4. Route aplikasi
+
+- / -> landing
+- /beranda -> beranda
+- /produk -> daftar menu
+- /produk/{slug} -> detail menu
+- /keranjang -> keranjang
+- /checkout -> checkout
+- /notifikasi -> notifikasi
+- /riwayat -> riwayat
+- /tentang -> tentang
+- /s -> hasil scan QR struk
+
+5. Status desain sekarang
+
+Desain sudah memiliki:
+- Mobile-first UI
+- Desktop/PC responsive mode
+- Sidebar desktop buka/tutup
+- Header desktop dengan panel/kotak soft
+- Header mobile sudah dibuat konsisten dengan desktop, juga memakai panel/kotak soft
+- Mode malam bagus dan bernuansa gelap ungu/pink
+- Mode siang sudah dibuat lebih soft, tidak terlalu putih polos
+- Banner promo mode siang sudah diberi variasi/layer agar tidak menyilaukan
+
+Jangan asal mengubah tema utama.
+Tema utama EMMALAKU adalah pink, ungu, soft food-order, glass/panel lembut.
+
+6. Hal yang tidak boleh diubah sembarangan
+
+JANGAN:
+- Mengubah total konsep desain.
+- Menghapus mobile-first style.
+- Menghapus versi desktop/PC responsive.
+- Mengubah sidebar dan header secara besar tanpa diminta.
+- Mengganti sistem localStorage menjadi database tanpa perintah jelas.
+- Menghapus static export Vercel.
+- Mengaktifkan kembali PHP serverless Vercel tanpa alasan kuat.
+- Menjalankan Vercel sebagai Laravel serverless lagi, karena sebelumnya memicu HTTP 500.
+- Mengubah route utama tanpa cek dampak ke static export.
+- Menghapus file HTML hasil export di public.
+- Mengubah nama asset build tanpa menjalankan export ulang.
+
+7. Catatan deploy Vercel yang sangat penting
+
+Project ini akhirnya dideploy ke Vercel sebagai STATIC STOREFRONT.
+Alasannya:
+- Laravel serverless PHP di Vercel sempat error 500 berkali-kali.
+- Error yang pernah muncul: service provider Laravel seperti view, view.finder, translator bermasalah di runtime Vercel.
+- Aplikasi ini tidak membutuhkan database server untuk bisnis logic.
+- Semua interaksi utama berjalan di JavaScript/localStorage.
+
+Konfigurasi Vercel:
+- vercel.json memakai outputDirectory: public
+- installCommand dibuat echo saja
+- buildCommand dibuat echo saja
+- Vercel tidak boleh menjalankan npm run build otomatis, karena HTML static dan asset hash bisa tidak sinkron.
+
+Jika mengubah CSS/JS/Blade:
+1. Jalankan npm build.
+2. Jalankan export static.
+3. Commit semua perubahan public hasil export.
+4. Push ke GitHub.
+
+Perintah wajib setelah perubahan frontend:
+npm.cmd run build
+php scripts/export-static.php
+
+Lalu cek:
+- public/build/manifest.json
+- HTML di public sudah memanggil CSS/JS hash terbaru
+- public/build/assets berisi file CSS/JS yang dipanggil HTML
+
+Contoh cek lokal static:
+php -S 127.0.0.1:8099 -t public
+Buka:
+http://127.0.0.1:8099/beranda
+http://127.0.0.1:8099/produk
+http://127.0.0.1:8099/produk/pepperoni-pizza
+
+8. Commit penting terakhir
+
+Beberapa commit penting:
+- e9661d5 Match mobile header with desktop panel
+- 6245d61 Polish desktop spacing and light theme banner
+- 2adfb8f Prevent Vercel from rebuilding static assets
+- 8c6c2e7 Deploy Vercel as static storefront
+
+Jika AI baru ingin memahami deploy, mulai dari commit 8c6c2e7 dan 2adfb8f.
+Jika AI baru ingin memahami polish UI terbaru, mulai dari commit 6245d61 dan e9661d5.
+
+9. Cara menjalankan lokal sebagai Laravel
+
+Masuk folder:
+cd C:\xampp\htdocs\emmalaku
+
+Install dependency jika belum ada:
+composer install
+npm install
+
+Jalankan Laravel:
+php artisan serve
+
+Jalankan Vite untuk development:
+npm run dev
+
+Buka:
+http://127.0.0.1:8000
+
+10. Cara menjalankan lokal seperti Vercel/static
+
+Build dan export:
+npm.cmd run build
+php scripts/export-static.php
+
+Serve folder public:
+php -S 127.0.0.1:8099 -t public
+
+Buka:
+http://127.0.0.1:8099
+http://127.0.0.1:8099/beranda
+http://127.0.0.1:8099/produk
+
+11. Instruksi untuk AI berikutnya sebelum mengedit
+
+Sebelum mengubah file:
+1. Baca PROMPT_LANJUT_AI_EMMALAKU.txt ini.
+2. Baca CATATAN_ANALISA_PROYEK.txt untuk analisa awal proyek.
+3. Cek git status.
+4. Baca file terkait yang mau diubah.
+5. Jangan mengubah file unrelated.
+6. Setelah edit frontend, wajib rebuild dan export static.
+7. Setelah export, cek asset CSS/JS tidak 404.
+8. Jika user minta deploy, commit dan push ke main.
+
+12. Fokus pengembangan ke depan
+
+Ide pengembangan yang aman:
+- Tambah produk/menu baru di resources/js/store/products.js
+- Rapikan detail produk
+- Tambah filter/search menu
+- Tambah variasi promo banner
+- Tambah animasi halus
+- Tambah halaman promo/voucher
+- Tambah validasi checkout
+- Tambah export struk
+- Tambah mode database hanya jika user benar-benar meminta
+
+Jika ingin menambah database:
+- Jangan langsung rombak.
+- Diskusikan dulu struktur tabel produk, order, order_items, customers, notifications.
+- Pastikan deploy target bukan static Vercel biasa jika butuh server/database.
+
+13. Prinsip desain
+
+Pertahankan:
+- Soft pink/purple food order theme
+- Rounded panel/card yang lembut
+- Glass/panel style
+- Mobile-first nyaman
+- Desktop full layar dengan sidebar kiri dan header panel
+- Burger sidebar desktop buka/tutup
+- Light mode tidak terlalu putih/kontras
+- Night mode tetap gelap elegan
+
+Jangan membuat:
+- Landing marketing yang mengganti aplikasi utama
+- Warna terlalu putih polos
+- Warna terlalu kontras menyakitkan mata
+- Layout desktop yang kembali seperti HP kecil di tengah
+- Header/sidebar terlalu mepet atas
+- Asset CSS/JS tidak sinkron dengan HTML static
+
+14. Ringkasan paling penting
+
+EMMALAKU sekarang adalah Laravel untuk development lokal, tetapi Vercel production memakai static export dari folder public.
+Setiap perubahan UI harus diikuti:
+npm.cmd run build
+php scripts/export-static.php
+git add resources public ...
+git commit
+git push origin main
+
+Jangan biarkan Vercel build ulang asset, karena bisa membuat HTML memanggil CSS lama dan tampilan menjadi amburadul.
