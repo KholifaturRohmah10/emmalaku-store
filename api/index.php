@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Bootstrap\LoadConfiguration;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
+use Illuminate\View\FileViewFinder;
 use Illuminate\View\ViewServiceProvider;
 
 if (isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) {
@@ -47,15 +50,32 @@ try {
     /** @var Application $app */
     $app = require_once __DIR__.'/../bootstrap/app.php';
 
-    if ((isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) && ! $app->bound('view')) {
-        $app->register(ViewServiceProvider::class);
+    if (isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL'])) {
+        $app->afterBootstrapping(LoadConfiguration::class, static function (Application $app) {
+            $app['config']->set('view.paths', [dirname(__DIR__).'/resources/views']);
+            $app['config']->set('view.compiled', $_ENV['VIEW_COMPILED_PATH'] ?? $_SERVER['VIEW_COMPILED_PATH'] ?? '/tmp/emmalaku/views');
+
+            if (! $app->bound('files')) {
+                $app->singleton('files', static fn () => new Filesystem);
+            }
+
+            $app->bind('view.finder', static function (Application $app) {
+                return new FileViewFinder($app['files'], $app['config']->get('view.paths'));
+            });
+        });
+
+        if (! $app->bound('view')) {
+            $app->register(ViewServiceProvider::class);
+        }
     }
 
     $app->handleRequest(Request::capture());
 } catch (Throwable $exception) {
+    error_log('EMMALAKU_EXCEPTION='.get_class($exception).': '.$exception->getMessage());
     error_log((string) $exception);
 
     if ($previous = $exception->getPrevious()) {
+        error_log('EMMALAKU_PREVIOUS='.get_class($previous).': '.$previous->getMessage());
         error_log('Previous exception: '.(string) $previous);
     }
 
