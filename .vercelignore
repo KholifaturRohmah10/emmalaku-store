@@ -1,6 +1,7 @@
 .env
 .env.*
 .phpunit.result.cache
+api
 node_modules
 vendor
 storage/logs/*.log

@@ -1630,7 +1630,8 @@ const renderOptionGroup = (group, value) => (group.ui === 'level' ? optionLevelT
 const renderProductDetailPage = () => {
     const container = document.getElementById('product-detail');
     const relatedContainer = document.getElementById('related-products');
-    const slug = document.body.dataset.productSlug;
+    const pathProductSlug = window.location.pathname.match(/^\/produk\/([^/?#]+)/)?.[1];
+    const slug = pathProductSlug ? decodeURIComponent(pathProductSlug) : document.body.dataset.productSlug;
     const editLineId = new URLSearchParams(window.location.search).get('edit');
 
     if (!container || !relatedContainer || !slug) {

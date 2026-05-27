@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+        <meta name="description" content="Aplikasi pesan makanan mobile-first untuk minuman dan makanan cepat saji.">
+        <title>Beranda | EMMALAKU</title>
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+                    <link rel="preload" as="style" href="https://emmalaku-store.vercel.app/build/assets/app-CK1xoRuW.css" /><link rel="modulepreload" as="script" href="https://emmalaku-store.vercel.app/build/assets/app-CPlBdEnP.js" /><link rel="stylesheet" href="https://emmalaku-store.vercel.app/build/assets/app-CK1xoRuW.css" /><script type="module" src="https://emmalaku-store.vercel.app/build/assets/app-CPlBdEnP.js"></script>            </head>
+    <body
+        data-page="home"
+            >
+        <div class="app-backdrop">
+            <div class="phone-shell">
+                <div class="phone-shell__chrome"></div>
+                <div class="phone-shell__body">
+                    <header class="app-topbar">
+                        <div class="topbar-primary">
+                            <button type="button" class="sidebar-toggle js-sidebar-toggle" aria-label="Buka/tutup menu" aria-expanded="true">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+
+                            <a href="https://emmalaku-store.vercel.app/beranda" class="brand-lockup" aria-label="Ke beranda EMMALAKU">
+                                <span class="brand-mark brand-mark--logo">
+                                    <img src="https://emmalaku-store.vercel.app/images/brand/emmalaku-shop.svg" alt="" aria-hidden="true">
+                                </span>
+                                <span>
+                                    <strong>EMMALAKU</strong>
+                                    <small>online order</small>
+                                </span>
+                            </a>
+
+                            <h1 class="topbar-title">Beranda</h1>
+                        </div>
+
+                        <div class="topbar-actions">
+                            <button type="button" class="mini-action mini-action--theme js-theme-toggle" aria-label="Ganti tampilan malam">
+                                <span class="js-theme-label">Malam</span>
+                            </button>
+                            <a href="https://emmalaku-store.vercel.app/keranjang" class="mini-action mini-action--cart " aria-label="Buka keranjang">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 6h2l1.5 8.5h9.5l2-6H8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" />
+            <circle cx="10" cy="18.2" r="1.4" fill="currentColor" />
+            <circle cx="17.2" cy="18.2" r="1.4" fill="currentColor" />
+        </svg>
+                                        <span class="mini-badge js-cart-count">0</span>
+                            </a>
+                        </div>
+                    </header>
+
+                    <main class="app-screen">
+                            <section class="home-stack">
+        <div id="home-promo" class="promo-banner">
+            <div class="promo-banner__placeholder"></div>
+        </div>
+
+        <label class="search-field" for="home-search">
+            <span class="search-field__icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path d="m15.4 15.4 3.6 3.6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" />
+        </svg>
+                    </span>
+            <input
+                id="home-search"
+                type="search"
+                placeholder="Cari teh susu, ramen, burger..."
+                autocomplete="off"
+            >
+        </label>
+
+        <section class="content-block">
+            <div class="content-head">
+                <h2>Kategori</h2>
+            </div>
+            <div id="home-category-grid" class="category-grid"></div>
+        </section>
+
+        <section class="content-block">
+            <div class="content-head">
+                <h2>Rekomendasi</h2>
+                <a href="https://emmalaku-store.vercel.app/produk" class="text-link">Lihat semua</a>
+            </div>
+            <div id="recommended-grid" class="menu-grid"></div>
+            <div id="home-search-empty" class="panel empty-state hidden">
+                <h3>Menu tidak ditemukan</h3>
+                <p>Coba kata kunci lain untuk lihat menu yang cocok.</p>
+            </div>
+        </section>
+
+        <section class="content-block">
+            <div class="content-head">
+                <h2>Pernah Anda Pesan</h2>
+                <a href="https://emmalaku-store.vercel.app/riwayat" class="text-link">Riwayat</a>
+            </div>
+            <div id="home-mini-summary" class="quick-cart-card"></div>
+        </section>
+    </section>
+                    </main>
+                </div>
+            </div>
+        </div>
+
+        <nav id="app-sidebar" class="bottom-nav" aria-label="Navigasi utama">
+            <a href="https://emmalaku-store.vercel.app/beranda" class="sidebar-brand" aria-label="Ke beranda EMMALAKU">
+                <span class="brand-mark brand-mark--logo">
+                    <img src="https://emmalaku-store.vercel.app/images/brand/emmalaku-shop.svg" alt="" aria-hidden="true">
+                </span>
+                <span>
+                    <small>Food order</small>
+                    <strong>EMMALAKU</strong>
+                    <em>online order</em>
+                </span>
+            </a>
+
+            <span class="sidebar-section">Menu Utama</span>
+
+                            <a href="https://emmalaku-store.vercel.app/beranda" class="bottom-nav__item is-active">
+                    <span class="bottom-nav__icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 11.5 12 5l8 6.5V20a1 1 0 0 1-1 1h-4.5v-5.5h-5V21H5a1 1 0 0 1-1-1z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" />
+        </svg>
+                                                    </span>
+                    <span>Beranda</span>
+                </a>
+                            <a href="https://emmalaku-store.vercel.app/produk" class="bottom-nav__item ">
+                    <span class="bottom-nav__icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 5h6v6H5zM13 5h6v6h-6zM5 13h6v6H5zM13 13h6v6h-6z" fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="1.8" />
+        </svg>
+                                                    </span>
+                    <span>Menu</span>
+                </a>
+                            <a href="https://emmalaku-store.vercel.app/notifikasi" class="bottom-nav__item ">
+                    <span class="bottom-nav__icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M8.4 18h7.2M9 18c0 1.7 1.3 3 3 3s3-1.3 3-3M6.8 18h10.4l-1.3-2.1V11a3.9 3.9 0 0 0-7.8 0v4.9z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" />
+        </svg>
+                                                            <span class="bottom-nav__badge js-notification-count">0</span>
+                                            </span>
+                    <span>Notifikasi</span>
+                </a>
+                            <a href="https://emmalaku-store.vercel.app/riwayat" class="bottom-nav__item ">
+                    <span class="bottom-nav__icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M5 7.5V4.8M19 7.5V4.8M4.5 9.2h15" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" />
+            <rect x="4" y="6.8" width="16" height="13.2" rx="3" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path d="M9.2 13h5.6M9.2 16.2h3.4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" />
+        </svg>
+                                                    </span>
+                    <span>Riwayat</span>
+                </a>
+                            <a href="https://emmalaku-store.vercel.app/tentang" class="bottom-nav__item ">
+                    <span class="bottom-nav__icon">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.8" />
+            <path d="M12 10.2V16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.8" />
+            <circle cx="12" cy="7.7" r="1" fill="currentColor" />
+        </svg>
+                                                    </span>
+                    <span>Tentang</span>
+                </a>
+                    </nav>
+        <button type="button" class="sidebar-scrim js-sidebar-scrim" aria-label="Tutup menu"></button>
+
+        <div id="toast-root" class="toast-root" aria-live="polite" aria-atomic="true"></div>
+        <div id="confirm-modal" class="confirm-modal hidden" aria-hidden="true">
+            <div class="confirm-modal__backdrop" data-confirm-cancel></div>
+            <section class="confirm-modal__card" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+                <div class="confirm-modal__icon">?</div>
+                <div class="confirm-modal__copy">
+                    <span>Konfirmasi</span>
+                    <h2 id="confirm-title">Lanjutkan aksi?</h2>
+                    <p id="confirm-message">Pastikan pilihan Anda sudah benar.</p>
+                </div>
+                <div class="confirm-modal__actions">
+                    <button type="button" class="button button--ghost" data-confirm-cancel>Batal</button>
+                    <button type="button" class="button button--primary" data-confirm-ok>Ya, lanjut</button>
+                </div>
+            </section>
+        </div>
+    </body>
+</html>

@@ -2,31 +2,62 @@
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": null,
     "outputDirectory": "public",
-    "functions": {
-        "api/index.php": {
-            "runtime": "vercel-php@0.7.3"
-        }
-    },
     "routes": [
         {
             "src": "/build/(.*)",
-            "dest": "/public/build/$1"
+            "dest": "/build/$1"
         },
         {
             "src": "/images/(.*)",
-            "dest": "/public/images/$1"
+            "dest": "/images/$1"
         },
         {
             "src": "/favicon.ico",
-            "dest": "/public/favicon.ico"
+            "dest": "/favicon.ico"
         },
         {
             "src": "/robots.txt",
-            "dest": "/public/robots.txt"
+            "dest": "/robots.txt"
         },
         {
-            "src": "/(.*)",
-            "dest": "/api/index.php"
+            "src": "^/$",
+            "dest": "/index.html"
+        },
+        {
+            "src": "^/beranda/?$",
+            "dest": "/beranda/index.html"
+        },
+        {
+            "src": "^/produk/?$",
+            "dest": "/produk/index.html"
+        },
+        {
+            "src": "^/produk/[^/]+/?$",
+            "dest": "/produk/detail/index.html"
+        },
+        {
+            "src": "^/keranjang/?$",
+            "dest": "/keranjang/index.html"
+        },
+        {
+            "src": "^/checkout/?$",
+            "dest": "/checkout/index.html"
+        },
+        {
+            "src": "^/notifikasi/?$",
+            "dest": "/notifikasi/index.html"
+        },
+        {
+            "src": "^/riwayat/?$",
+            "dest": "/riwayat/index.html"
+        },
+        {
+            "src": "^/tentang/?$",
+            "dest": "/tentang/index.html"
+        },
+        {
+            "src": "^/s/?$",
+            "dest": "/s/index.html"
         }
     ]
 }

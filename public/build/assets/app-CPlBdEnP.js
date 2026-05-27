@@ -190,44 +190,44 @@ function Bn(e,t){return function(){return e.apply(t,arguments)}}const{toString:x
                 </div>
             </div>
         </section>
-    `},Si=(e,t)=>e.ui==="level"?wi(e,t):ki(e,t),Ct=()=>{const e=document.getElementById("product-detail"),t=document.getElementById("related-products"),n=document.body.dataset.productSlug,a=new URLSearchParams(window.location.search).get("edit");if(!e||!t||!n)return;const r=Y(n);if(!r){e.innerHTML=`
+    `},Si=(e,t)=>e.ui==="level"?wi(e,t):ki(e,t),Ct=()=>{const e=document.getElementById("product-detail"),t=document.getElementById("related-products"),n=window.location.pathname.match(/^\/produk\/([^/?#]+)/)?.[1],a=n?decodeURIComponent(n):document.body.dataset.productSlug,r=new URLSearchParams(window.location.search).get("edit");if(!e||!t||!a)return;const s=Y(a);if(!s){e.innerHTML=`
             <article class="panel empty-state">
                 <h2>Menu tidak ditemukan</h2>
                 <p>Silakan kembali ke daftar menu.</p>
                 <a href="/produk" class="button button--primary">Kembali ke Menu</a>
             </article>
-        `;return}if(R.productSlug!==r.slug){const i=a?Gs(a):null;R.productSlug=r.slug,R.editLineId=i?.slug===r.slug?i.lineId:null,R.quantity=i?.slug===r.slug?i.quantity:1,R.selections=i?.slug===r.slug?he(r,i.selections):Kt(r)}const s=he(r,R.selections);R.selections=s,e.innerHTML=`
+        `;return}if(R.productSlug!==s.slug){const o=r?Gs(r):null;R.productSlug=s.slug,R.editLineId=o?.slug===s.slug?o.lineId:null,R.quantity=o?.slug===s.slug?o.quantity:1,R.selections=o?.slug===s.slug?he(s,o.selections):Kt(s)}const i=he(s,R.selections);R.selections=i,e.innerHTML=`
         <article class="detail-card">
             <div class="detail-card__visual">
-                <img src="${r.image}" alt="${f(r.name)}">
+                <img src="${s.image}" alt="${f(s.name)}">
             </div>
             <div class="detail-card__body">
                 <div class="detail-card__meta">
-                    <span class="tag">${f(r.category)}</span>
-                    <span>${r.prepTime} menit</span>
-                    <span>${r.rating.toFixed(1)}</span>
+                    <span class="tag">${f(s.category)}</span>
+                    <span>${s.prepTime} menit</span>
+                    <span>${s.rating.toFixed(1)}</span>
                 </div>
-                <h1>${f(r.name)}</h1>
-                ${we(r,1,"detail-card__price",s)}
-                <p class="detail-card__description">${f(r.description)}</p>
-                ${xe(r)?`
+                <h1>${f(s.name)}</h1>
+                ${we(s,1,"detail-card__price",i)}
+                <p class="detail-card__description">${f(s.description)}</p>
+                ${xe(s)?`
                             <div class="detail-card__promo-note detail-card__promo-note--discount">
-                                Diskon ${xe(r)}% aktif.
+                                Diskon ${xe(s)}% aktif.
                             </div>
                         `:""}
-                ${ke(r)?`
+                ${ke(s)?`
                             <div class="detail-card__promo-note">
                                 Promo Beli 1 Gratis 1 aktif.
                             </div>
                         `:""}
 
                 <div class="detail-card__features">
-                    ${r.features.map(i=>`
-                                <span class="feature-pill">${f(i)}</span>
+                    ${s.features.map(o=>`
+                                <span class="feature-pill">${f(o)}</span>
                             `).join("")}
                 </div>
 
-                ${(r.options??[]).map(i=>Si(i,s[i.id])).join("")}
+                ${(s.options??[]).map(o=>Si(o,i[o.id])).join("")}
 
                 <div class="detail-card__footer">
                     <div class="quantity-stepper">
@@ -237,12 +237,12 @@ function Bn(e,t){return function(){return e.apply(t,arguments)}}const{toString:x
                     </div>
                     <button type="button" class="button button--primary button--wide detail-card__cta js-detail-add">
                         <span class="detail-card__cta-label">${R.editLineId?"Simpan":"Tambah Menu"}</span>
-                        <strong class="detail-card__cta-price">${O(Be(r,s)*R.quantity)}</strong>
+                        <strong class="detail-card__cta-price">${O(Be(s,i)*R.quantity)}</strong>
                     </button>
                 </div>
             </div>
         </article>
-    `,t.innerHTML=B.filter(i=>i.slug!==r.slug&&i.category===r.category).slice(0,4).map(ut).join("")},_i=()=>{const e=document.querySelector(".cart-paybar"),t=document.querySelector(".bottom-nav");return!e||!t||e.dataset.floatingMounted==="true"||(t.parentElement?.insertBefore(e,t),e.dataset.floatingMounted="true"),e},Ce=()=>{const e=document.getElementById("cart-items"),t=document.getElementById("cart-summary"),n=document.getElementById("cart-recommendations"),a=_i(),r=document.querySelector(".order-summary-card .button--primary");if(!e||!t||!n||!a||!r)return;const s=H(),i=s.filter(o=>de(o.lineId));s.length?(e.innerHTML=s.map(o=>`
+    `,t.innerHTML=B.filter(o=>o.slug!==s.slug&&o.category===s.category).slice(0,4).map(ut).join("")},_i=()=>{const e=document.querySelector(".cart-paybar"),t=document.querySelector(".bottom-nav");return!e||!t||e.dataset.floatingMounted==="true"||(t.parentElement?.insertBefore(e,t),e.dataset.floatingMounted="true"),e},Ce=()=>{const e=document.getElementById("cart-items"),t=document.getElementById("cart-summary"),n=document.getElementById("cart-recommendations"),a=_i(),r=document.querySelector(".order-summary-card .button--primary");if(!e||!t||!n||!a||!r)return;const s=H(),i=s.filter(o=>de(o.lineId));s.length?(e.innerHTML=s.map(o=>`
                     <article class="order-item ${de(o.lineId)?"is-selected":"is-muted"}">
                         <button
                             type="button"
