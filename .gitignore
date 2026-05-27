@@ -6,6 +6,8 @@
 .sixth
 .phpactor.json
 .phpunit.result.cache
+CATATAN_ANALISA_PROYEK.txt
+PROMPT_LANJUT_AI_EMMALAKU.txt
 /.fleet
 /.idea
 /.nova
