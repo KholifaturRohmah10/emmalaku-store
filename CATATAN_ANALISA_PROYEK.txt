@@ -1,0 +1,294 @@
+CATATAN ANALISA PROYEK EMMALAKU
+Tanggal analisa: 27 Mei 2026
+
+1. Ringkasan proyek
+
+Proyek ini adalah aplikasi Laravel untuk simulasi pemesanan makanan/minuman bernama EMMALAKU.
+Fokus aplikasi saat ini adalah tampilan mobile-first, yaitu tampilan web yang dibuat seperti layar HP.
+
+Secara fungsi, aplikasi menyediakan:
+- Halaman pembuka/landing.
+- Beranda.
+- Daftar menu makanan dan minuman.
+- Detail produk/menu.
+- Keranjang.
+- Checkout.
+- Struk/invoice.
+- QR struk untuk membuka ringkasan pesanan.
+- Notifikasi pesanan.
+- Riwayat pesanan.
+- Halaman tentang project.
+
+2. Jenis aplikasi
+
+Ini bukan aplikasi mobile native Android/iOS.
+Ini adalah aplikasi WEB berbasis Laravel + Blade + Vite + JavaScript.
+
+Namun desainnya memang dibuat seperti aplikasi mobile:
+- Ada phone shell/lebar layar seperti HP.
+- Ada bottom navigation.
+- Layout dan spacing fokus untuk layar mobile.
+- Banyak state disimpan di browser melalui localStorage.
+
+Jadi kesimpulannya:
+- Bentuk teknis: Web app.
+- Bentuk tampilan saat ini: Mobile-first / mirip aplikasi mobile.
+- Kalau nanti mau dibuat versi web desktop, yang perlu dikembangkan terutama layout responsive desktop, bukan mengubah dari native mobile.
+
+3. Teknologi yang dipakai
+
+Backend:
+- PHP 8.2+
+- Laravel 12
+- Blade template
+
+Frontend:
+- Vite
+- Tailwind CSS 4
+- JavaScript module
+- CSS custom cukup besar di resources/css/app.css
+
+Dependency utama:
+- composer.json: laravel/framework, laravel/tinker
+- package.json: vite, laravel-vite-plugin, tailwindcss, @tailwindcss/vite, axios, concurrently
+
+4. Struktur file penting
+
+Route utama:
+- routes/web.php
+
+Controller utama:
+- app/Http/Controllers/StorefrontController.php
+
+Layout Blade:
+- resources/views/layouts/app.blade.php
+- resources/views/layouts/entry.blade.php
+- resources/views/layouts/scan.blade.php
+
+Halaman Blade:
+- resources/views/landing.blade.php
+- resources/views/home.blade.php
+- resources/views/products/index.blade.php
+- resources/views/products/show.blade.php
+- resources/views/cart.blade.php
+- resources/views/checkout.blade.php
+- resources/views/notifications.blade.php
+- resources/views/history.blade.php
+- resources/views/about.blade.php
+- resources/views/receipt-scan.blade.php
+
+Data produk/menu:
+- resources/js/store/products.js
+
+Logic frontend:
+- resources/js/app.js
+
+Styling:
+- resources/css/app.css
+
+Asset gambar:
+- public/images/brand
+- public/images/menu
+
+5. Daftar route aplikasi
+
+Route yang ditemukan:
+- GET / -> landing
+- GET /s -> hasil scan QR struk
+- GET /beranda -> beranda
+- GET /produk -> daftar menu
+- GET /produk/{slug} -> detail menu
+- GET /keranjang -> keranjang
+- GET /checkout -> checkout dan struk
+- GET /notifikasi -> notifikasi
+- GET /riwayat -> riwayat pesanan
+- GET /tentang -> tentang project
+
+Semua route diatur lewat StorefrontController.
+
+6. Alur kerja aplikasi
+
+Alur umum:
+1. User masuk ke landing.
+2. Landing redirect/masuk ke beranda.
+3. User melihat kategori dan rekomendasi.
+4. User membuka daftar menu di /produk.
+5. User memilih produk, variasi, dan jumlah.
+6. Produk masuk ke keranjang.
+7. User checkout dengan nama, alamat, WhatsApp, dan metode pembayaran.
+8. Pembayaran disimulasikan berhasil.
+9. Aplikasi membuat invoice/struk.
+10. QR struk dibuat di frontend.
+11. Riwayat dan notifikasi muncul berdasarkan invoice yang tersimpan di browser.
+
+7. Penyimpanan data
+
+Produk/menu:
+- Tidak berasal dari database.
+- Semua data produk ditulis hardcoded di resources/js/store/products.js.
+- Ada sekitar 19 produk/menu.
+
+Keranjang:
+- Disimpan di localStorage browser.
+- Key utama: emmalaku-food-cart-v1.
+
+Invoice/struk:
+- Disimpan di localStorage browser.
+- Key utama:
+  - emmalaku-food-invoice-v1
+  - emmalaku-food-invoice-history-v1
+
+Notifikasi:
+- Dibangun dari invoice history di localStorage.
+- Ada key localStorage untuk status notifikasi, seen, hidden, alerted.
+
+Profil checkout:
+- Disimpan di localStorage.
+- Key: emmalaku-food-profile-v1.
+
+Tema siang/malam:
+- Disimpan di localStorage.
+- Key: emmalaku-food-theme-v1.
+
+8. Apakah ada database?
+
+Ada file database:
+- database/database.sqlite
+
+Konfigurasi .env:
+- DB_CONNECTION=sqlite
+- SESSION_DRIVER=database
+- QUEUE_CONNECTION=database
+- CACHE_STORE=database
+
+Migration yang sudah ran:
+- create_users_table
+- create_cache_table
+- create_jobs_table
+
+Tabel yang ditemukan di SQLite:
+- users
+- password_reset_tokens
+- sessions
+- cache
+- cache_locks
+- jobs
+- job_batches
+- failed_jobs
+- migrations
+- sqlite_sequence
+
+Isi tabel saat dicek:
+- users: 0 data
+- sessions: 3 data
+- migrations: 3 data
+- tabel cache/job/password reset: 0 data
+
+Kesimpulan database:
+- Database memang ada.
+- Tapi database belum dipakai untuk data bisnis aplikasi seperti produk, keranjang, order, invoice, pembayaran, notifikasi, atau riwayat.
+- Untuk fitur pemesanan, aplikasi saat ini masih berjalan dengan data hardcoded dan localStorage browser.
+- Halaman tentang project juga menyebut project masih "tanpa database" untuk data aplikasi.
+
+9. Cara menjalankan proyek
+
+Pastikan sudah masuk folder:
+cd C:\xampp\htdocs\emmalaku
+
+Jika dependency belum ada:
+composer install
+npm install
+
+Pastikan .env sudah ada.
+Jika belum ada:
+copy .env.example .env
+php artisan key:generate
+
+Karena project memakai SQLite:
+Pastikan file ini ada:
+database/database.sqlite
+
+Jika belum ada, buat file kosong:
+type nul > database\database.sqlite
+
+Lalu jalankan migration:
+php artisan migrate
+
+Mode development Laravel saja:
+php artisan serve
+
+Buka di browser:
+http://127.0.0.1:8000
+
+Mode development frontend:
+npm run dev
+
+Cara praktis dari script composer:
+composer run dev
+
+Catatan:
+Script composer run dev akan menjalankan beberapa proses sekaligus:
+- php artisan serve
+- queue listener
+- pail log
+- vite dev server
+
+10. Cara build asset produksi
+
+Untuk build CSS/JS:
+npm run build
+
+Output build ada di:
+public/build
+
+11. Test
+
+Perintah test:
+php artisan test
+
+Hasil saat dicek:
+- 7 test passed
+- 2 test failed
+
+Yang gagal:
+- StorefrontPagesTest data set "home"
+- StorefrontPagesTest data set "about"
+
+Penyebab yang terlihat:
+- Test home mengakses "/" dan berharap teks "Kategori", tetapi route "/" sekarang adalah landing, bukan beranda.
+- Test about berharap teks "Sederhana, cepat, dan nyaman di HP.", tetapi teks itu tidak ada lagi di view about terbaru.
+
+Ini bukan berarti aplikasi langsung rusak, tapi test perlu disesuaikan dengan route/view terbaru.
+
+12. Catatan teknis penting
+
+- README.md masih README bawaan Laravel, belum dokumentasi khusus EMMALAKU.
+- Tidak terlihat folder .git, jadi folder ini bukan repository git aktif di mesin ini.
+- Ada public/build, vendor, dan node_modules, berarti dependency dan hasil build sudah ada.
+- App memakai Blade untuk kerangka halaman, lalu JavaScript mengisi banyak konten dinamis.
+- resources/js/app.js cukup besar dan memegang banyak logic aplikasi.
+- QR struk dibuat sendiri di JavaScript, lalu endpoint /s membaca payload query p untuk menampilkan struk.
+- Ada beberapa karakter hasil encoding yang tampak rusak di file/view/output, misalnya simbol silang close button dan bullet di JavaScript. Ini perlu diperiksa kalau nanti mau polishing.
+
+13. Rekomendasi pengembangan berikutnya
+
+Jika ingin membuat versi web desktop:
+- Pertahankan Laravel dan route yang ada.
+- Buat layout responsive desktop untuk halaman beranda, menu, detail, keranjang, checkout, notifikasi, dan riwayat.
+- Hilangkan batas phone shell untuk viewport desktop, atau buat mode desktop khusus.
+- Pertimbangkan memindahkan data produk/order/invoice dari localStorage ke database.
+
+Jika ingin menjadikan backend lebih nyata:
+- Buat tabel products.
+- Buat tabel carts atau cart_items jika cart ingin server-side.
+- Buat tabel orders.
+- Buat tabel order_items.
+- Buat tabel payments.
+- Buat tabel notifications.
+- Pindahkan data dari resources/js/store/products.js ke seeder/database.
+- Buat controller/API untuk cart dan checkout.
+
+Kesimpulan akhir:
+Proyek EMMALAKU saat ini adalah web app Laravel dengan tampilan mobile-first untuk simulasi order makanan.
+Database SQLite ada, tetapi belum dipakai untuk data utama aplikasi.
+Fitur order sekarang masih berbasis JavaScript dan localStorage browser.
