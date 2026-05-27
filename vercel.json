@@ -1,6 +1,8 @@
 {
     "$schema": "https://openapi.vercel.sh/vercel.json",
     "framework": null,
+    "installCommand": "echo \"No install needed for committed static export\"",
+    "buildCommand": "echo \"Using committed static export\"",
     "outputDirectory": "public",
     "routes": [
         {
